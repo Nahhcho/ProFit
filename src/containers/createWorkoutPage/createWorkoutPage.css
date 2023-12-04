@@ -1,0 +1,43 @@
+.form-label {
+    color: white;
+    font-weight: 500;
+}
+
+.exercise-label {
+    margin-top: 20px;
+    color: white;
+    font-weight: 500;
+}
+
+.workout-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.exercise-add {
+    height: 20px;
+    width: 10px;
+}
+
+.add-button {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    align-self: center;
+}
+
+.set-button {
+    margin-top: 20px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    align-self: center;
+}
+
+.create-container {
+    padding-bottom: 70px;
+}

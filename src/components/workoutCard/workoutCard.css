@@ -1,0 +1,25 @@
+.workout-card {
+    display: flex;
+    justify-content: space-around;
+    background-color: #3E4459;
+    height: 175px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+}
+
+.card-title {
+    font-size: 30px;
+    color: white;
+    font-weight: 500;
+   
+}
+
+.exercises-container > p {
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+    justify-self: center;
+    margin-top: 5px;
+}

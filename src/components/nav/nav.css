@@ -1,0 +1,18 @@
+.navbar {
+    background-color: #100F0F;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin-top: -16px; /* Overlapping with the line */
+  }
+
+  .line {
+    border-top: 2px solid greenyellow;
+  }
+
+  .nav-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden; /* Clear any potential floats */
+  }
