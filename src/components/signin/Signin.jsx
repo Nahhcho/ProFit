@@ -32,6 +32,7 @@ const Signin = () => {
                 user: jwtDecode(JSON.stringify(data)).user
             })
             localStorage.setItem('authTokens', JSON.stringify(data))
+            console.log(session)
             navigate('/')
         }
         else {
