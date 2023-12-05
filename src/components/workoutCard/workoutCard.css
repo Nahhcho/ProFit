@@ -1,12 +1,5 @@
-.workout-card {
-    display: flex;
-    justify-content: space-around;
-    background-color: #3E4459;
-    height: 175px;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    
+.workout-card-container {
+    padding: 30px;
 }
 
 .card-title {
@@ -22,4 +15,12 @@
     font-weight: 500;
     justify-self: center;
     margin-top: 5px;
+}
+
+.card-body > p {
+    color: black;
+}
+
+.card-body > h5 {
+    color: black;
 }

@@ -1,0 +1,52 @@
+h2 {
+    color: white;
+}
+
+h5 {
+    color: white;
+}
+
+.exercise-container {
+    padding: 20px;
+}
+
+.weight-input {
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 3px;
+}
+
+.counter {
+    color: white;
+    font-size: 50px;
+    align-self: center;
+}
+
+.counter-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+
+.exercise-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    width: 130px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.next-button {
+    margin-left: 10px;
+}
+
+.set-container {
+    display: flex;
+    align-items: baseline;
+}
+

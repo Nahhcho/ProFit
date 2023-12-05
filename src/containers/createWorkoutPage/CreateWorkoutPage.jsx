@@ -4,14 +4,17 @@ import Header from '../../components/header/Header'
 import './createWorkoutPage.css'
 import addButton from './add-icon.png'
 import { Context } from '../../components/contextProvider'
+import { useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 
 const CreateWorkoutPage = () => {
 
   const [title, setTitle] = useState('')
   const [exercises, setExercises] = useState([])
   const [session, setSession] = useContext(Context)
+  const navigate = useNavigate()
 
-  const saveWorkout = () => {
+  const saveWorkout = async () => {
     fetch(`${session.API_URL}/user/${session.user.id}`, {
       method: 'PUT',
       headers: {
@@ -23,8 +26,15 @@ const CreateWorkoutPage = () => {
       })
     })
     .then(response => response.json())
-    .then(result => {
-      console.log(result)
+    .then(data => {
+      setSession({
+        ...session, 
+        authTokens: data,
+        user: jwtDecode(JSON.stringify(data)).user
+      })
+      localStorage.setItem('authTokens', JSON.stringify(data))
+      console.log(data)
+      navigate('/')
     })
   }
 

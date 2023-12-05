@@ -9,6 +9,7 @@ import Register from './components/register/Register'
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import WorkoutPage from './containers/workoutPage/WorkoutPage';
 import CreateWorkoutPage from './containers/createWorkoutPage/CreateWorkoutPage';
+import StartWorkout from './containers/startWorkout/StartWorkout';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
     <Route path='/register' element={<Register />} />
     <Route path='/' element={<WorkoutPage />} />
     <Route path='/create' element={<CreateWorkoutPage />} />
+    <Route path='/start/:workoutData' element={<StartWorkout />} />
     </Routes>
     </ContextProvider>
   );

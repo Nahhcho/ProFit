@@ -29,10 +29,9 @@ const Signin = () => {
             setSession({
                 ...session, 
                 authTokens: data,
-                user: jwtDecode(data.access)
+                user: jwtDecode(JSON.stringify(data)).user
             })
             localStorage.setItem('authTokens', JSON.stringify(data))
-            console.log(session)
             navigate('/')
         }
         else {
