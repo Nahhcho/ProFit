@@ -16,7 +16,7 @@ const WorkoutPage = () => {
       if(session.user === null) {
         navigate('/signin')
       }
-    })
+    }, [])
 
   return (
     <div>
