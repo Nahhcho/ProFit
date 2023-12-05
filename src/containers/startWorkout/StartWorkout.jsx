@@ -10,7 +10,7 @@ const StartWorkout = () => {
     const workout = JSON.parse(decodeURIComponent(workoutData));
     const [exerciseCount, setExerciseCount] = useState(1)
     const [setCount, setSetCount] = useState(1)
-    const [seconds, setSeconds] = useState(5)
+    const [seconds, setSeconds] = useState(90)
     const [intervalId, setIntervalId] = useState(null)
 
     const startCounting = () => {
@@ -53,27 +53,34 @@ const StartWorkout = () => {
       }, [seconds]);
 
   return (
-    <div>
+    <>
         <Header title={workout.title}/>
         <div className='exercise-container'>
-            <h2>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h2>
+            <h1>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h1>
             <div className='counter-container'>
                 <p className='counter'>{seconds}</p>
                 <div className='button-container'>
-                    <button type="button" class="btn btn-outline-success" onClick={startCounting}>Start</button>
+                    <button type="button" class={
+                      seconds === 0 ? 
+                      ("btn btn-outline-success disabled") : ("btn btn-outline-success")
+                      } onClick={
+                        seconds === 0 ? 
+                        null : startCounting
+                        }>Start</button>
                     <button type="button" class="btn btn-outline-danger" onClick={stopCounting}>Stop</button>
                 </div>
             </div>
+            <div></div>
             <div className='set-container'>
-                <h5>Set {setCount}: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x </h5>
+                <h3>Set {setCount}: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x </h3>
                 <input type="number" className='weight-input'/> 
-                <p>lbs</p>
-                <button type="button" class="next-button btn btn-outline-primary btn-sm" onClick={() => {nextSet()}}>Next</button>
+                <h3>lbs</h3>
+                <button type="button" class={"next-button btn btn-outline-primary"} onClick={() => {nextSet()}}>Next</button>
             </div>
             
         </div>
         <Nav />
-    </div>
+    </>
   )
 }
 

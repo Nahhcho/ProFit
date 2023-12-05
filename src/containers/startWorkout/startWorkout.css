@@ -2,24 +2,31 @@ h2 {
     color: white;
 }
 
-h5 {
+h3{
     color: white;
 }
 
 .exercise-container {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85vh;
 }
 
 .weight-input {
     width: 60px;
+    height: 45px;
     margin-left: 10px;
     margin-right: 3px;
+    font-size: xx-large;
 }
 
 .counter {
-    color: white;
-    font-size: 50px;
+    color: greenyellow;
+    font-size: 80px;
     align-self: center;
+    font-weight: 500;
 }
 
 .counter-container {
@@ -46,6 +53,7 @@ h5 {
 }
 
 .set-container {
+    align-self: center;
     display: flex;
     align-items: baseline;
 }
