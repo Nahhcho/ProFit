@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from '../../components/header/Header'
 import WorkoutCard from '../../components/workoutCard/WorkoutCard'
 import Nav from '../../components/nav/Nav'
@@ -11,6 +11,12 @@ const WorkoutPage = () => {
 
     const navigate = useNavigate()
     const [session] = useContext(Context)
+
+    useEffect(()=>{
+      if(session.user === null) {
+        navigate('/signin')
+      }
+    })
 
   return (
     <div>
