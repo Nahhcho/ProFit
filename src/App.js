@@ -16,7 +16,6 @@ function App() {
     <ContextProvider>
     <Routes>
     <Route path='' element={<Signin />} />
-    <Route path='/signin' element={<Signin />} />
     <Route path='/register' element={<Register />} />
     <Route path='/' element={<WorkoutPage />} />
     <Route path='/create' element={<CreateWorkoutPage />} />
