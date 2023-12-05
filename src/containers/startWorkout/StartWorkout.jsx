@@ -12,7 +12,7 @@ const StartWorkout = () => {
     const [setCount, setSetCount] = useState(1)
     const [seconds, setSeconds] = useState(90)
     const [intervalId, setIntervalId] = useState(null)
-
+    
     const startCounting = () => {
         const id = setInterval(() => {
             setSeconds((prevCount) => prevCount - 1);
@@ -35,7 +35,7 @@ const StartWorkout = () => {
             setSetCount(setCount+1)
             startCounting()
         }
-        setSeconds(5)
+        setSeconds(90)
         
     }
 
@@ -62,12 +62,12 @@ const StartWorkout = () => {
                 <div className='button-container'>
                     <button type="button" class={
                       seconds === 0 ? 
-                      ("btn btn-outline-success disabled") : ("btn btn-outline-success")
+                      ("btn btn-outline-success disabled btn-lg") : ("btn btn-outline-success btn-lg")
                       } onClick={
                         seconds === 0 ? 
                         null : startCounting
                         }>Start</button>
-                    <button type="button" class="btn btn-outline-danger" onClick={stopCounting}>Stop</button>
+                    <button type="button" class="btn btn-outline-danger btn-lg" onClick={stopCounting}>Stop</button>
                 </div>
             </div>
             <div></div>
@@ -75,7 +75,7 @@ const StartWorkout = () => {
                 <h3>Set {setCount}: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x </h3>
                 <input type="number" className='weight-input'/> 
                 <h3>lbs</h3>
-                <button type="button" class={"next-button btn btn-outline-primary"} onClick={() => {nextSet()}}>Next</button>
+                <button type="button" class={"next-button btn btn-outline-primary btn-lg"} onClick={() => {nextSet()}}>Next</button>
             </div>
             
         </div>
