@@ -41,7 +41,7 @@ const Register = () => {
                 user: jwtDecode(JSON.stringify(data)).user
             })
             localStorage.setItem('authTokens', JSON.stringify(data))
-            navigate('/')
+            navigate('/workouts')
         })
     }
 

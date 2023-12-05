@@ -33,7 +33,7 @@ const Signin = () => {
             })
             localStorage.setItem('authTokens', JSON.stringify(data))
             console.log(session)
-            navigate('/')
+            navigate('/workouts')
         }
         else {
             alert('error')

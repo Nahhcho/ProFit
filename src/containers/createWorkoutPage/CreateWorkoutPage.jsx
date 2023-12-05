@@ -34,7 +34,7 @@ const CreateWorkoutPage = () => {
       })
       localStorage.setItem('authTokens', JSON.stringify(data))
       console.log(data)
-      navigate('/')
+      navigate('/workouts')
     })
   }
 
