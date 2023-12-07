@@ -12,6 +12,19 @@ const StartWorkout = () => {
     const [setCount, setSetCount] = useState(1)
     const [seconds, setSeconds] = useState(90)
     const [intervalId, setIntervalId] = useState(null)
+
+    // src/containers/startWorkout/StartWorkout.js
+
+const sendPushNotification = () => {
+  if ('serviceWorker' in navigator && 'PushManager' in window) {
+    navigator.serviceWorker.ready.then(registration => {
+      registration.showNotification('Timer Alert', {
+        body: 'Your timer is complete!',
+      });
+    });
+  }
+};
+
     
     const startCounting = () => {
         const id = setInterval(() => {
@@ -48,6 +61,7 @@ const StartWorkout = () => {
 
       useEffect(() => {
         if(seconds === 0) {
+          sendPushNotification()
             clearInterval(intervalId)
         }
       }, [seconds]);
