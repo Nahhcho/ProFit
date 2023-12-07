@@ -1,12 +1,17 @@
 .form-label {
     color: white;
     font-weight: 500;
+    font-size: large;
 }
 
 .exercise-label {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
     color: white;
     font-weight: 500;
+    width: 100%;
+    font-size: large;
 }
 
 .workout-form-container {
@@ -38,6 +43,8 @@
     align-self: center;
 }
 
-.create-container {
-    padding-bottom: 70px;
+.close-button {
+    align-self: e;
 }
+
+

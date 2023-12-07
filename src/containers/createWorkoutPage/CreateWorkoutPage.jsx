@@ -34,7 +34,7 @@ const CreateWorkoutPage = () => {
       })
       localStorage.setItem('authTokens', JSON.stringify(data))
       console.log(data)
-      navigate('/workouts')
+      navigate('/')
     })
   }
 
@@ -71,6 +71,19 @@ const CreateWorkoutPage = () => {
     console.log(updatedExercises)
   }
 
+  const deleteExercise = () => {
+
+  }
+
+  const deleteSet = () => {
+    
+  }
+
+
+  useEffect(() => {
+    console.log(exercises)
+  }, [exercises])
+
   return (
     <div className='create-container'>
         <Header title={'Workouts'}></Header>
@@ -82,12 +95,13 @@ const CreateWorkoutPage = () => {
             {
               exercises.map((exercise, exerciseIndex) => (
                 <>
-                <label for="workoutTitle" className="exercise-label">Exercise {exerciseIndex+1}</label>
+                <label for="workoutTitle" className="exercise-label">Exercise {exerciseIndex+1}<button type="button" class="close-button btn-close btn-close-white" aria-label="Close"></button></label>
                 <input type="text" class="form-control" value={exercise.title} onChange={(e) => {updateExercises(e, exerciseIndex)}}/>
+              
                 {
                   exercise.sets.map((set, setIndex) => (
                     <div>
-                      <label for="workoutTitle" className="exercise-label">Set {setIndex+1}</label>
+                      <label for="workoutTitle" className="exercise-label">Set {setIndex+1} <button type="button" class="close-button btn-close btn-close-white" aria-label="Close" ></button></label>
                       <input type="number" class="form-control" value={set} onChange={(e) => {updateSet(e, exerciseIndex, setIndex)}}/>
                     </div>
                   ))
