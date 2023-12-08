@@ -15,7 +15,7 @@ const StartWorkout = () => {
     const [startTime, setStartTime] = useState(0)
     const [timeSet, setTimeSet] = useState(false)
     const [timeDiff, setTimeDiff] = useState(0)
-    const [displayCount, setDisplayCount] = useState(5)
+    const [displayCount, setDisplayCount] = useState(90)
     
     
     const startCounting = () => {
