@@ -10,25 +10,27 @@ const StartWorkout = () => {
     const workout = JSON.parse(decodeURIComponent(workoutData));
     const [exerciseCount, setExerciseCount] = useState(1)
     const [setCount, setSetCount] = useState(1)
-    const [seconds, setSeconds] = useState(90)
+    const [seconds, setSeconds] = useState(0)
     const [intervalId, setIntervalId] = useState(null)
-
-    // src/containers/startWorkout/StartWorkout.js
-
-const sendPushNotification = () => {
-  if ('serviceWorker' in navigator && 'PushManager' in window) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.showNotification('Timer Alert', {
-        body: 'Your timer is complete!',
-      });
-    });
-  }
-};
-
+    const [startTime, setStartTime] = useState(0)
+    const [timeSet, setTimeSet] = useState(false)
+    const [timeDiff, setTimeDiff] = useState(0)
+    const [displayCount, setDisplayCount] = useState(5)
+    
     
     const startCounting = () => {
+      if(timeSet === false) {
+        const currentDate = new Date()
+        const hoursToSeconds = currentDate.getHours() * 3600;
+        const minutesToSeconds = currentDate.getMinutes() * 60;
+        const timeSeconds = currentDate.getSeconds();
+        const totalSeconds = timeSeconds+minutesToSeconds+hoursToSeconds
+        setStartTime(totalSeconds)
+        setTimeSet(true)
+      }
+        
         const id = setInterval(() => {
-            setSeconds((prevCount) => prevCount - 1);
+            setSeconds((prevCount) => prevCount + 1);
           }, 1000);
         setIntervalId(id)
     }
@@ -36,6 +38,9 @@ const sendPushNotification = () => {
     const stopCounting = () => {
         // Clear the interval when the button is clicked
         clearInterval(intervalId)
+        setTimeSet(false)
+        setDisplayCount(displayCount-timeDiff)
+        setTimeDiff(0)
       };
 
     const nextSet = () => {
@@ -60,11 +65,21 @@ const sendPushNotification = () => {
       }, [intervalId]);
 
       useEffect(() => {
-        if(seconds === 0) {
-          sendPushNotification()
-            clearInterval(intervalId)
+        if(timeSet === true) {
+          const currentDate = new Date()
+          const hoursToSeconds = currentDate.getHours() * 3600;
+          const minutesToSeconds = currentDate.getMinutes() * 60;
+          const timeSeconds = currentDate.getSeconds();
+          const nowTime = timeSeconds+minutesToSeconds+hoursToSeconds
+
+          setTimeDiff(nowTime-startTime)
+          if(displayCount-timeDiff === 0) {
+            stopCounting()
+          }
         }
-      }, [seconds]);
+        
+        }
+      , [seconds]);
 
   return (
     <>
@@ -72,13 +87,13 @@ const sendPushNotification = () => {
         <div className='exercise-container'>
             <h1>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h1>
             <div className='counter-container'>
-                <p className='counter'>{seconds}</p>
+                <p className='counter'>{displayCount - timeDiff === 0 ? (0):(displayCount - timeDiff)}</p>
                 <div className='button-container'>
                     <button type="button" class={
-                      seconds === 0 ? 
+                        displayCount - timeDiff === 0 ? 
                       ("btn btn-outline-success disabled btn-lg") : ("btn btn-outline-success btn-lg")
                       } onClick={
-                        seconds === 0 ? 
+                        displayCount - timeDiff === 0 ? 
                         null : startCounting
                         }>Start</button>
                     <button type="button" class="btn btn-outline-danger btn-lg" onClick={stopCounting}>Stop</button>

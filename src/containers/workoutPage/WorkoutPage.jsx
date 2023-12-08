@@ -26,7 +26,6 @@ const WorkoutPage = () => {
     };
 
     useEffect(()=>{
-      requestNotificationPermission()
       if(session.user === null) {
         navigate('/signin')
       }
