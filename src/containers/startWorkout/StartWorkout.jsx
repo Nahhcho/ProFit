@@ -47,13 +47,12 @@ const StartWorkout = () => {
         if(workout.exercises[exerciseCount-1].sets[setCount] === undefined) {
             setExerciseCount(exerciseCount+1)
             setSetCount(1)
-            stopCounting()
         }
         else {
             setSetCount(setCount+1)
-            startCounting()
         }
-        setSeconds(90)
+        stopCounting()
+        setDisplayCount(90)
         
     }
 
