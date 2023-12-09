@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import Nav from '../../components/nav/Nav'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './startWorkout.css'
+import { Context } from '../../components/contextProvider'
+import { jwtDecode } from 'jwt-decode'
 
 const StartWorkout = () => {
 
     const { workoutData } = useParams();
     const workout = JSON.parse(decodeURIComponent(workoutData));
+    const [session, setSession] = useContext(Context)
     const [exerciseCount, setExerciseCount] = useState(1)
     const [setCount, setSetCount] = useState(1)
     const [seconds, setSeconds] = useState(0)
@@ -16,8 +19,37 @@ const StartWorkout = () => {
     const [timeSet, setTimeSet] = useState(false)
     const [timeDiff, setTimeDiff] = useState(0)
     const [displayCount, setDisplayCount] = useState(90)
+    const [finished, setFinished] = useState(false)
+    const navigate= useNavigate()
+    const [newSet, setNewSet] = useState({
+      newWeight: '',
+      newReps: ''
+    })
     
-    
+    useEffect(() => {
+      // Cleanup function to clear the interval when the component unmounts
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, [intervalId]);
+
+    useEffect(() => {
+      if(timeSet === true) {
+        const currentDate = new Date()
+        const hoursToSeconds = currentDate.getHours() * 3600;
+        const minutesToSeconds = currentDate.getMinutes() * 60;
+        const timeSeconds = currentDate.getSeconds();
+        const nowTime = timeSeconds+minutesToSeconds+hoursToSeconds
+
+        setTimeDiff(nowTime-startTime)
+        if(displayCount-timeDiff === 0) {
+          stopCounting()
+        }
+      }
+      
+      }
+    , [seconds]);
+
     const startCounting = () => {
       if(timeSet === false) {
         const currentDate = new Date()
@@ -45,6 +77,10 @@ const StartWorkout = () => {
 
     const nextSet = () => {
         if(workout.exercises[exerciseCount-1].sets[setCount] === undefined) {
+          if(workout.exercises[exerciseCount] === undefined) {
+            stopCounting()
+            navigate('/')
+          }
             setExerciseCount(exerciseCount+1)
             setSetCount(1)
         }
@@ -56,32 +92,44 @@ const StartWorkout = () => {
         
     }
 
-      useEffect(() => {
-        // Cleanup function to clear the interval when the component unmounts
-        return () => {
-          clearInterval(intervalId);
-        };
-      }, [intervalId]);
+    const updateSet = (id) => {
+      fetch(`${session.API_URL}/set_detail/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          weight: newSet.newWeight,
+          reps: newSet.newReps,
+          userId: session.user.id
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setSession({
+          ...session, 
+          authTokens: data,
+          user: jwtDecode(JSON.stringify(data)).user
+        })
+        localStorage.setItem('authTokens', JSON.stringify(data))
+        console.log(data)
+        setNewSet({newWeight: '', newReps: ''})
+        nextSet()
+      })  
+    }
 
-      useEffect(() => {
-        if(timeSet === true) {
-          const currentDate = new Date()
-          const hoursToSeconds = currentDate.getHours() * 3600;
-          const minutesToSeconds = currentDate.getMinutes() * 60;
-          const timeSeconds = currentDate.getSeconds();
-          const nowTime = timeSeconds+minutesToSeconds+hoursToSeconds
+    const updateNewWeight = (e) => {
+      setNewSet({...newSet, newWeight: e.target.value})
+    }
 
-          setTimeDiff(nowTime-startTime)
-          if(displayCount-timeDiff === 0) {
-            stopCounting()
-          }
-        }
-        
-        }
-      , [seconds]);
+    const updateNewReps = (e) => {
+      setNewSet({...newSet, newReps: e.target.value})
+    }
+
+      
 
   return (
-    <>
+    <> 
         <Header title={workout.title}/>
         <div className='exercise-container'>
             <h1>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h1>
@@ -98,12 +146,29 @@ const StartWorkout = () => {
                     <button type="button" class="btn btn-outline-danger btn-lg" onClick={stopCounting}>Stop</button>
                 </div>
             </div>
-            <div></div>
+            <div className='sets-container'>
+            <div className='old-set-container'>
+              <h5>Previous Set: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x {workout.exercises[exerciseCount-1].sets[setCount-1].weight} </h5>
+            </div>
             <div className='set-container'>
-                <h3>Set {setCount}: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x </h3>
-                <input type="number" className='weight-input'/> 
+                <h3>Set {setCount}:</h3>
+                <input type="number" className='rep-input' value={newSet.newReps} onChange={(e) => updateNewReps(e)}/> 
+                <h3>x</h3>
+                <input type="number" className='weight-input' value={newSet.newWeight} onChange={(e) => updateNewWeight(e)}/> 
                 <h3>lbs</h3>
-                <button type="button" class={"next-button btn btn-outline-primary btn-lg"} onClick={() => {nextSet()}}>Next</button>
+                <button type="button" 
+                class={
+                  newSet.newWeight === 0 || newSet.newWeight === '' ? 
+                  ("next-button btn btn-outline-primary btn-lg disabled") :
+                  ("next-button btn btn-outline-primary btn-lg")
+                } 
+                onClick={
+                  newSet.newWeight !== 0 || newSet.newWeight !== '' ? 
+                  () => {
+                  updateSet(workout.exercises[exerciseCount-1].sets[setCount-1].id)
+                  } : null
+                  } >Next</button>
+            </div>
             </div>
             
         </div>

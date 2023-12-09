@@ -71,12 +71,21 @@ const CreateWorkoutPage = () => {
     console.log(updatedExercises)
   }
 
-  const deleteExercise = () => {
-
+  const deleteExercise = (index) => {
+    setExercises(exercises.slice(0, index).concat(exercises.slice(index + 1)))
   }
 
-  const deleteSet = () => {
-    
+  const deleteSet = (exerciseIndex, setIndex) => {
+    const updatedExercises = exercises.map((exercise, index) =>
+      exerciseIndex === index
+        ? {
+            ...exercise,
+            sets: exercise.sets.slice(0, setIndex).concat(exercise.sets.slice(setIndex + 1)
+            ),
+          }
+        : exercise
+    );
+    setExercises(updatedExercises);
   }
 
 
@@ -95,13 +104,13 @@ const CreateWorkoutPage = () => {
             {
               exercises.map((exercise, exerciseIndex) => (
                 <>
-                <label for="workoutTitle" className="exercise-label">Exercise {exerciseIndex+1}<button type="button" class="close-button btn-close btn-close-white" aria-label="Close"></button></label>
+                <label for="workoutTitle" className="exercise-label">Exercise {exerciseIndex+1}<button onClick={() => {deleteExercise(exerciseIndex)}} type="button" class="close-button btn-close btn-close-white" aria-label="Close"></button></label>
                 <input type="text" class="form-control" value={exercise.title} onChange={(e) => {updateExercises(e, exerciseIndex)}}/>
               
                 {
                   exercise.sets.map((set, setIndex) => (
                     <div>
-                      <label for="workoutTitle" className="exercise-label">Set {setIndex+1} <button type="button" class="close-button btn-close btn-close-white" aria-label="Close" ></button></label>
+                      <label for="workoutTitle" className="exercise-label">Set {setIndex+1} <button onClick={() => {deleteSet(exerciseIndex, setIndex)}} type="button" class="close-button btn-close btn-close-white" aria-label="Close" ></button></label>
                       <input type="number" class="form-control" value={set} onChange={(e) => {updateSet(e, exerciseIndex, setIndex)}}/>
                     </div>
                   ))
@@ -112,6 +121,7 @@ const CreateWorkoutPage = () => {
             }
             <img src={addButton} className='add-button' onClick={addExercise}/>
             <button type="button" class="btn btn-outline-success" onClick={saveWorkout}>Save Workout</button>
+            
         </div>
         <Nav />
     </div>
