@@ -42,7 +42,7 @@ const StartWorkout = () => {
         const nowTime = timeSeconds+minutesToSeconds+hoursToSeconds
 
         setTimeDiff(nowTime-startTime)
-        if(displayCount-timeDiff === 0) {
+        if(displayCount-timeDiff <= 0) {
           stopCounting()
         }
       }
@@ -134,13 +134,13 @@ const StartWorkout = () => {
         <div className='exercise-container'>
             <h1>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h1>
             <div className='counter-container'>
-                <p className='counter'>{displayCount - timeDiff === 0 ? (0):(displayCount - timeDiff)}</p>
+                <p className='counter'>{displayCount - timeDiff <= 0 ? (0):(displayCount - timeDiff)}</p>
                 <div className='button-container'>
                     <button type="button" class={
-                        displayCount - timeDiff === 0 ? 
+                        displayCount - timeDiff <= 0 ? 
                       ("btn btn-outline-success disabled btn-lg") : ("btn btn-outline-success btn-lg")
                       } onClick={
-                        displayCount - timeDiff === 0 ? 
+                        displayCount - timeDiff <= 0 ? 
                         null : startCounting
                         }>Start</button>
                     <button type="button" class="btn btn-outline-danger btn-lg" onClick={stopCounting}>Stop</button>
