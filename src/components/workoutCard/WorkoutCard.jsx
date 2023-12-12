@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './workoutCard.css'
 import { Context } from '../contextProvider'
 import { useNavigate } from 'react-router-dom'
+import settingsImage from './settings.png'
 
 const WorkoutCard = ({ workout }) => {
 
@@ -11,7 +12,9 @@ const WorkoutCard = ({ workout }) => {
     <div className='workout-card-container'>
         <div class="card text-center">
           <div class="card-header">
-            {workout.title}
+            <h4 className='workout-title'>{workout.title}</h4>
+            <img className='settings-image' src={settingsImage} 
+            onClick={() => {navigate(`/edit/${encodeURIComponent(JSON.stringify(workout))}`)}} />
           </div>
         <div class="card-body">
           <h5 class="card-title">

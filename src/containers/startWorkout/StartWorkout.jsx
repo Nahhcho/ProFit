@@ -19,7 +19,8 @@ const StartWorkout = () => {
     const [timeSet, setTimeSet] = useState(false)
     const [timeDiff, setTimeDiff] = useState(0)
     const [displayCount, setDisplayCount] = useState(90)
-    const [finished, setFinished] = useState(false)
+    const [currentExercise, setCurrentExercise] = useState(workout.exercises.filter(exercise => exercise.exercise_num === exerciseCount)[0])
+    const [currentSet, setCurrentSet] = useState(currentExercise.sets.filter(set => set.set_num === setCount)[0])
     const navigate= useNavigate()
     const [newSet, setNewSet] = useState({
       newWeight: '',
@@ -27,7 +28,6 @@ const StartWorkout = () => {
     })
     
     useEffect(() => {
-      // Cleanup function to clear the interval when the component unmounts
       return () => {
         clearInterval(intervalId);
       };
@@ -46,7 +46,6 @@ const StartWorkout = () => {
           stopCounting()
         }
       }
-      
       }
     , [seconds]);
 
@@ -76,15 +75,25 @@ const StartWorkout = () => {
       };
 
     const nextSet = () => {
-        if(workout.exercises[exerciseCount-1].sets[setCount] === undefined) {
-          if(workout.exercises[exerciseCount] === undefined) {
+        console.log(setCount)
+        console.log(currentExercise.sets.length)
+        console.log(exerciseCount)
+        if(setCount === currentExercise.sets.length) {
+          if(exerciseCount === workout.exercises.length) {
             stopCounting()
             navigate('/')
           }
+          else {
+            let exercise = workout.exercises.filter(exercise => exercise.exercise_num === exerciseCount+1)[0]
+            console.log(exercise)
+            setCurrentSet(exercise.sets.filter(set => set.set_num === 1)[0])
             setExerciseCount(exerciseCount+1)
+            setCurrentExercise(exercise)
             setSetCount(1)
+          }
         }
         else {
+            setCurrentSet(currentExercise.sets.filter(set => set.set_num === setCount+1)[0])
             setSetCount(setCount+1)
         }
         stopCounting()
@@ -92,8 +101,8 @@ const StartWorkout = () => {
         
     }
 
-    const updateSet = (id) => {
-      fetch(`${session.API_URL}/set_detail/${id}`, {
+    const updateSet = () => {
+      fetch(`${session.API_URL}/set_detail/${currentSet.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -132,7 +141,7 @@ const StartWorkout = () => {
     <> 
         <Header title={workout.title}/>
         <div className='exercise-container'>
-            <h1>Exercise {exerciseCount}: {workout.exercises[exerciseCount-1].title}</h1>
+            <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>
             <div className='counter-container'>
                 <p className='counter'>{displayCount - timeDiff <= 0 ? (0):(displayCount - timeDiff)}</p>
                 <div className='button-container'>
@@ -148,10 +157,10 @@ const StartWorkout = () => {
             </div>
             <div className='sets-container'>
             <div className='old-set-container'>
-              <h5>Previous Set: {workout.exercises[exerciseCount-1].sets[setCount-1].reps} x {workout.exercises[exerciseCount-1].sets[setCount-1].weight} </h5>
+              <h5>Previous Set: {currentSet.reps} x {currentSet.weight} </h5>
             </div>
             <div className='set-container'>
-                <h3>Set {setCount}:</h3>
+                <h3>Set {currentSet.set_num}:</h3>
                 <input type="number" className='rep-input' value={newSet.newReps} onChange={(e) => updateNewReps(e)}/> 
                 <h3>x</h3>
                 <input type="number" className='weight-input' value={newSet.newWeight} onChange={(e) => updateNewWeight(e)}/> 
@@ -165,7 +174,7 @@ const StartWorkout = () => {
                 onClick={
                   newSet.newWeight !== 0 || newSet.newWeight !== '' ? 
                   () => {
-                  updateSet(workout.exercises[exerciseCount-1].sets[setCount-1].id)
+                  updateSet()
                   } : null
                   } >Next</button>
             </div>

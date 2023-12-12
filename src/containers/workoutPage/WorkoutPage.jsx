@@ -12,20 +12,9 @@ const WorkoutPage = () => {
     const navigate = useNavigate()
     const [session] = useContext(Context)
 
-    const requestNotificationPermission = async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          console.log('Notification permission granted');
-        } else {
-          console.warn('Notification permission denied');
-        }
-      } catch (error) {
-        console.error('Error requesting notification permission:', error);
-      }
-    };
 
     useEffect(()=>{
+      console.log(session.user.workouts)
       if(session.user === null) {
         navigate('/signin')
       }

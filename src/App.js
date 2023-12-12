@@ -11,6 +11,7 @@ import WorkoutPage from './containers/workoutPage/WorkoutPage';
 import CreateWorkoutPage from './containers/createWorkoutPage/CreateWorkoutPage';
 import StartWorkout from './containers/startWorkout/StartWorkout';
 import { useContext } from 'react';
+import EditWorkout from './containers/editWorkout/EditWorkout';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
     <Route path='/' element={<WorkoutPage />} />
     <Route path='/create' element={<CreateWorkoutPage />} />
     <Route path='/start/:workoutData' element={<StartWorkout />} />
+    <Route path='/edit/:workoutData' element={<EditWorkout />} />
     </Routes>
     </ContextProvider>
   );

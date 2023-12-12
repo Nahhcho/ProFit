@@ -1,0 +1,27 @@
+h5 {
+    color: white;
+}
+
+.edit-set-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    
+}
+
+.edit-set-reps {
+    width: 65px;
+    font-size: large;
+    margin-right: 10px;
+}
+
+.edit-set-weight {
+    width: 65px;
+    font-size: large;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.lbs {
+    margin-right: 10px;
+}

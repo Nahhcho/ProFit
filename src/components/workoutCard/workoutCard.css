@@ -24,3 +24,16 @@
 .card-body > h5 {
     color: black;
 }
+
+.settings-image {
+    height: 25px;
+}
+
+.card-header {
+    justify-content: space-between;
+    display: flex;
+}
+
+.workout-title {
+    color: black;
+}
