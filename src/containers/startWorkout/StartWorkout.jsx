@@ -105,8 +105,8 @@ const StartWorkout = () => {
 
     const updateSet = () => {
       nextSet()
-      const weight = newSet.weight
-      const reps = newSet.reps
+      const weight = newSet.newWeight
+      const reps = newSet.newReps
       setNewSet({newWeight: '', newReps: ''})
       fetch(`${session.API_URL}/set_detail/${currentSet.id}`, {
         method: 'PUT',
@@ -128,6 +128,7 @@ const StartWorkout = () => {
         })
         localStorage.setItem('authTokens', JSON.stringify(data))
         console.log(data)
+        
       })  
     }
 
