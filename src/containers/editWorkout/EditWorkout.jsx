@@ -6,6 +6,7 @@ import './editWorkout.css'
 import { Context } from '../../components/contextProvider'
 import { useNavigate, useParams } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
+import Loading from '../../components/loading/Loading'
 
 const EditWorkout = () => {
 
@@ -14,6 +15,7 @@ const EditWorkout = () => {
     const [title, setTitle] = useState('')
     const [exercises, setExercises] = useState(workout.exercises)
     const [session, setSession] = useContext(Context)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const addExercise = () => {
@@ -81,6 +83,7 @@ const EditWorkout = () => {
       }
 
       const saveEdit = () => {
+        setLoading(true)
         fetch(`${session.API_URL}/workout_detail/${workout.id}`, {
           method: 'PUT',
           headers: {
@@ -106,6 +109,7 @@ const EditWorkout = () => {
       }
 
       const deleteWorkout = () => {
+        setLoading(true)
         fetch(`${session.API_URL}/workout_detail/${workout.id}`, {
           method: 'DELETE',
           headers: {
@@ -134,6 +138,9 @@ const EditWorkout = () => {
 
   return (
     <div className='create-container'>
+      {
+        loading ? (<Loading />) : null
+      }
         <Header title={'Edit'}></Header>
         <div className='workout-form-container'>
           <h1>Edit Workout</h1>

@@ -104,14 +104,18 @@ const StartWorkout = () => {
     }
 
     const updateSet = () => {
+      nextSet()
+      const weight = newSet.weight
+      const reps = newSet.reps
+      setNewSet({newWeight: '', newReps: ''})
       fetch(`${session.API_URL}/set_detail/${currentSet.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          weight: newSet.newWeight,
-          reps: newSet.newReps,
+          weight: weight,
+          reps: reps,
           userId: session.user.id
         })
       })
@@ -124,8 +128,6 @@ const StartWorkout = () => {
         })
         localStorage.setItem('authTokens', JSON.stringify(data))
         console.log(data)
-        setNewSet({newWeight: '', newReps: ''})
-        nextSet()
       })  
     }
 

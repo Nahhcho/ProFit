@@ -6,12 +6,14 @@ import addButton from './add-icon.png'
 import { Context } from '../../components/contextProvider'
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
+import Loading from '../../components/loading/Loading'
 
 const CreateWorkoutPage = () => {
 
   const [title, setTitle] = useState('')
   const [exercises, setExercises] = useState([])
   const [session, setSession] = useContext(Context)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const saveWorkout = async () => {
@@ -95,6 +97,9 @@ const CreateWorkoutPage = () => {
 
   return (
     <div className='create-container'>
+      {
+        loading ? (<Loading />) : null
+      }
         <Header title={'Workouts'}></Header>
         <div className='workout-form-container'>
           <h1>New Workout</h1>
@@ -120,7 +125,10 @@ const CreateWorkoutPage = () => {
               ))
             }
             <img src={addButton} className='add-button' onClick={addExercise}/>
-            <button type="button" class="btn btn-outline-success" onClick={saveWorkout}>Save Workout</button>
+            <button type="button" class="btn btn-outline-success" onClick={() => {
+              saveWorkout()
+              setLoading(true)
+              }}>Save Workout</button>
             
         </div>
         <Nav />

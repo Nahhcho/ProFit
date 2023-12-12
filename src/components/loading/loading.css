@@ -1,0 +1,16 @@
+.loading-gif {
+    height: 50px;
+    width: 50px;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.modal-content {
+    background: none;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+}
+
