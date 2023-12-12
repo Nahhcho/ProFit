@@ -12,6 +12,12 @@ const WorkoutPage = () => {
     const navigate = useNavigate()
     const [session] = useContext(Context)
 
+    useEffect(() => {
+      if(session.user === null) {
+        navigate('/signin')
+      }
+    }, [])
+
   return (
     <>
     {

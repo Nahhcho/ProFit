@@ -22,7 +22,6 @@ function App() {
     <Route path='/signin' element={<Signin />} />
     <Route path='/register' element={<Register />} />
     <Route path='/' element={<WorkoutPage />} />
-    <Route path='' element={<WorkoutPage />} />
     <Route path='/create' element={<CreateWorkoutPage />} />
     <Route path='/start/:workoutData' element={<StartWorkout />} />
     <Route path='/edit/:workoutData' element={<EditWorkout />} />
