@@ -99,7 +99,7 @@ const StartWorkout = () => {
             setSetCount(setCount+1)
         }
         stopCounting()
-        setDisplayCount(90)
+        setDisplayCount(newTime)
         
     }
 
