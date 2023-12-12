@@ -12,16 +12,11 @@ const WorkoutPage = () => {
     const navigate = useNavigate()
     const [session] = useContext(Context)
 
-
-    useEffect(()=>{
-      console.log(session.user.workouts)
-      if(session.user === null) {
-        navigate('/signin')
-      }
-    }, [])
-
   return (
-    <div>
+    <>
+    {
+      session.user === null ? (navigate('/signin')) : (
+        <div>
     <Header title='Workouts'/>
     <div className='workouts-container'>
     <AddButton />
@@ -34,6 +29,10 @@ const WorkoutPage = () => {
     </div>
     <Nav />
     </div>
+      )
+    }
+    </>
+    
   )
 }
 

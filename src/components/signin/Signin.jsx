@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { Context } from '../contextProvider';
 import 'tachyons'
 import { jwtDecode } from 'jwt-decode';
+import Error from '../error/Error'
 
 const Signin = () => {
     const navigate = useNavigate();
     const [session, setSession] = useContext(Context);
+    const [error, setError] = useState({
+        warn: false,
+        error: ''
+    })
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -32,16 +37,20 @@ const Signin = () => {
                 user: jwtDecode(JSON.stringify(data)).user
             })
             localStorage.setItem('authTokens', JSON.stringify(data))
-            console.log(session)
+            console.log(data)
             navigate('/')
         }
         else {
-            alert('error')
+            console.log(data)
+            setError({ warn: true, message: data.detail})
         }
     }
 
     return (
         <>
+        {
+            error.warn ? <Error message={error.message}/> : null
+        }
         <article class="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main class="pa4 white-80">
                 <form class="measure">
