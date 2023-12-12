@@ -104,6 +104,29 @@ const EditWorkout = () => {
         navigate('/')
         })  
       }
+
+      const deleteWorkout = () => {
+        fetch(`${session.API_URL}/workout_detail/${workout.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: session.user.id
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+        setSession({
+          ...session, 
+          authTokens: data,
+          user: jwtDecode(JSON.stringify(data)).user
+        })
+        localStorage.setItem('authTokens', JSON.stringify(data))
+        console.log(data)
+        navigate('/')
+        })  
+      }
     
       useEffect(() => {
         console.log(exercises)
@@ -142,7 +165,10 @@ const EditWorkout = () => {
             }
             <img src={addButton} className='add-button' onClick={addExercise}/>
             
-            <button type="button" class="btn btn-outline-success" onClick={saveEdit}>Save Workout</button>
+            <div className='edit-button-container'>
+            <button type="button" class="edit-workout-button btn btn-outline-success" onClick={saveEdit}>Save Workout</button>
+            <button type="button" class="edit-workout-button btn btn-outline-danger" onClick={deleteWorkout}>Delete Workout</button>
+            </div>
             
         </div>
         <Nav />

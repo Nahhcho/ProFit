@@ -10,6 +10,8 @@ const StartWorkout = () => {
 
     const { workoutData } = useParams();
     const workout = JSON.parse(decodeURIComponent(workoutData));
+    const [newTime, setNewTime] = useState(90)
+    const [editTimer, setEditTimer] = useState(false)
     const [session, setSession] = useContext(Context)
     const [exerciseCount, setExerciseCount] = useState(1)
     const [setCount, setSetCount] = useState(1)
@@ -127,6 +129,12 @@ const StartWorkout = () => {
       })  
     }
 
+    const changeTime = () => {
+      setDisplayCount(newTime)
+      setEditTimer(false)
+      console.log(newTime)
+    }
+
     const updateNewWeight = (e) => {
       setNewSet({...newSet, newWeight: e.target.value})
     }
@@ -137,52 +145,85 @@ const StartWorkout = () => {
 
       
 
-  return (
-    <> 
-        <Header title={workout.title}/>
-        <div className='exercise-container'>
-            <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>
-            <div className='counter-container'>
-                <p className='counter'>{displayCount - timeDiff <= 0 ? (0):(displayCount - timeDiff)}</p>
-                <div className='button-container'>
-                    <button type="button" class={
-                        displayCount - timeDiff <= 0 ? 
-                      ("btn btn-outline-success disabled btn-lg") : ("btn btn-outline-success btn-lg")
-                      } onClick={
-                        displayCount - timeDiff <= 0 ? 
-                        null : startCounting
-                        }>Start</button>
-                    <button type="button" class="btn btn-outline-danger btn-lg" onClick={stopCounting}>Stop</button>
-                </div>
-            </div>
-            <div className='sets-container'>
-            <div className='old-set-container'>
-              <h5>Previous Set: {currentSet.reps} x {currentSet.weight} </h5>
-            </div>
-            <div className='set-container'>
-                <h3>Set {currentSet.set_num}:</h3>
-                <input type="number" className='rep-input' value={newSet.newReps} onChange={(e) => updateNewReps(e)}/> 
-                <h3>x</h3>
-                <input type="number" className='weight-input' value={newSet.newWeight} onChange={(e) => updateNewWeight(e)}/> 
-                <h3>lbs</h3>
-                <button type="button" 
-                class={
-                  newSet.newWeight === 0 || newSet.newWeight === '' ? 
-                  ("next-button btn btn-outline-primary btn-lg disabled") :
-                  ("next-button btn btn-outline-primary btn-lg")
-                } 
-                onClick={
-                  newSet.newWeight !== 0 || newSet.newWeight !== '' ? 
-                  () => {
-                  updateSet()
-                  } : null
-                  } >Next</button>
-            </div>
-            </div>
-            
-        </div>
-        <Nav />
-    </>
+    return (
+      <> 
+          <Header title={workout.title}/>
+          <div className='exercise-container'>
+              <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>
+              <div className='counter-container' >
+                  {
+                      editTimer === false ? (
+                          <>
+                              <p className='counter' onClick={() => {
+                                setEditTimer(true)
+                                stopCounting()
+                                }}>
+                                  {displayCount - timeDiff <= 0 ? (0) : (displayCount - timeDiff)}
+                              </p>
+                              <div className='button-container'>
+                                  <button
+                                      type="button"
+                                      className={
+                                          displayCount - timeDiff <= 0 ?
+                                              "btn btn-outline-success disabled btn-lg" :
+                                              "btn btn-outline-success btn-lg"
+                                      }
+                                      onClick={
+                                          displayCount - timeDiff <= 0 ?
+                                              null :
+                                              startCounting
+                                      }
+                                  >
+                                      Start
+                                  </button>
+                                  <button
+                                      type="button"
+                                      className="btn btn-outline-danger btn-lg"
+                                      onClick={stopCounting}
+                                  >
+                                      Stop
+                                  </button>
+                              </div>
+                          </>
+                      ) : (
+                        <div className='edit-timer-container'>
+                        <input className='edit-timer' type='number' value={newTime} onChange={(e) => {setNewTime(e.target.value)}}/>
+                        <button type="button" class="edit-timer-button btn btn-outline-primary" onClick={(e) => {changeTime(e)}}>Edit</button>
+                        </div>
+                      )
+                  }
+              </div>
+              <div className='sets-container'>
+                  <div className='old-set-container'>
+                      <h5>Previous Set: {currentSet.reps} x {currentSet.weight}</h5>
+                  </div>
+                  <div className='set-container'>
+                      <h3>Set {currentSet.set_num}:</h3>
+                      <input type="number" className='rep-input' value={newSet.newReps} onChange={(e) => updateNewReps(e)}/>
+                      <h3>x</h3>
+                      <input type="number" className='weight-input' value={newSet.newWeight} onChange={(e) => updateNewWeight(e)}/>
+                      <h3>lbs</h3>
+                      <button
+                          type="button"
+                          className={
+                              newSet.newWeight === 0 || newSet.newWeight === '' ?
+                                  "next-button btn btn-outline-primary btn-lg disabled" :
+                                  "next-button btn btn-outline-primary btn-lg"
+                          }
+                          onClick={
+                              newSet.newWeight !== 0 || newSet.newWeight !== '' ?
+                                  () => {
+                                      updateSet();
+                                  } : null
+                          }
+                      >
+                          Next
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <Nav />
+      </>
   )
 }
 
