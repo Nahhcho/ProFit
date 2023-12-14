@@ -4,6 +4,7 @@ import arrowButton from './arrow.png'
 
 const DateHeader = ({ currentDate, setCurrentDate }) => {
 
+    const today = new Date()
     
     const monthNames = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -31,7 +32,13 @@ const DateHeader = ({ currentDate, setCurrentDate }) => {
     <nav className='date-header'>
         <img className='backward-arrow-button' onClick={prevDate} src={arrowButton} alt="" />
         <div className='date-div'>
-            <h4>{`${monthName} ${currentDate.getDate()}`}</h4>
+          {
+            currentDate.toDateString() === today.toDateString() ? (
+              <h4>Today</h4>
+            ) : (
+              <h4>{`${monthName} ${currentDate.getDate()}`}</h4>
+            )
+          }
         </div>
         <img className='forward-arrow-button' onClick={nextDate} src={arrowButton} alt="" />
     </nav>

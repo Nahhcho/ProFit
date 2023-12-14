@@ -1,11 +1,19 @@
-.date-header {
+.week-header {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: baseline;
     background-color: #37293E;
     color: #fff;
-    text-align: center;
-    padding: 10px;
+    padding: 7px;
     font-weight: 500;
-    font-size: 24px;
+    padding-bottom: 0px;
+  }
+
+  .day-icon {
+    font-size: large;
+  }
+
+  .current-day-icon {
+    font-size: large;
+    color: greenyellow;
   }
