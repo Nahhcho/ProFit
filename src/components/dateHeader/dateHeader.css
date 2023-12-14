@@ -1,0 +1,23 @@
+.date-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #100F0F;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  .forward-arrow-button {
+    height: 30px; 
+    margin-left: 5px;
+    
+  }
+
+  .backward-arrow-button {
+    height: 30px;
+    margin-right: 5px;
+    transform: scaleX(-1);
+  }

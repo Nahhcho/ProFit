@@ -13,7 +13,7 @@ const Nav = () => {
     <hr className='line'/>
     <nav className='navbar'>
         <p onClick={() => {navigate('/')}}>Workouts</p>
-        <p>Activity</p>
+        <p onClick={() => {navigate('/activity')}}>Activity</p>
         <p>Profile</p>
         <p onClick={() => {
           localStorage.removeItem('authTokens');

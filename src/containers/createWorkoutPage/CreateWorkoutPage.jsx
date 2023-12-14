@@ -46,7 +46,7 @@ const CreateWorkoutPage = () => {
 
   const addSet = (exerciseIndex) => {
     const updatedExercises = exercises.map((exercise, index) => (
-      exerciseIndex === index ? {...exercise, sets: [...exercise.sets, {set_num: 0, reps: 0}]} : exercise
+      exerciseIndex === index ? {...exercise, sets: [...exercise.sets, {set_num: 0, reps: null}]} : exercise
     ))
     setExercises(updatedExercises)
   }
@@ -116,7 +116,7 @@ const CreateWorkoutPage = () => {
                   exercise.sets.map((set, setIndex) => (
                     <div>
                       <label for="workoutTitle" className="exercise-label">Set {setIndex+1} <button onClick={() => {deleteSet(exerciseIndex, setIndex)}} type="button" class="close-button btn-close btn-close-white" aria-label="Close" ></button></label>
-                      <input type="number" class="form-control" value={set.reps} onChange={(e) => {updateSet(e, exerciseIndex, setIndex)}}/>
+                      <input type="number" class="create-rep-input form-control" min="1" step="1" pattern="\d+" value={set.reps} placeholder='reps' onChange={(e) => {updateSet(e, exerciseIndex, setIndex)}}/>
                     </div>
                   ))
                 }
@@ -129,7 +129,6 @@ const CreateWorkoutPage = () => {
               saveWorkout()
               setLoading(true)
               }}>Save Workout</button>
-            
         </div>
         <Nav />
     </div>
