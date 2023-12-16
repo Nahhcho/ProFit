@@ -34,9 +34,15 @@ const ProfileModal = ({ showProfile, setShowProfile }) => {
                 <p className='setting-target'>{session.user.age}</p>
                 </div>
                 <hr className='line'/>
+                
                 <div className='setting-container'>
                 <p className='setting-title'>Current Split:</p>
-                <p className='setting-target'>{session.user.current_split.title}</p>
+                <p className='setting-target'>
+                {
+                    session.user.current_split ? 
+                        <>{session.user.current_split.title}</> : null
+                }
+                </p>
                 </div>
             </div>
         </Modal.Body>
