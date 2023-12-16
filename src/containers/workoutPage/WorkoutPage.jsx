@@ -12,19 +12,22 @@ const WorkoutPage = () => {
 
     const navigate = useNavigate()
     const [session] = useContext(Context)
-    const [workouts, setWorkouts] = useState(session.user.workouts.filter(workout => workout.completed_date === null))
+    const [workouts, setWorkouts] = useState(null)
 
     useEffect(() => {
       console.log(workouts)
       if(session.user === null) {
         navigate('/signin')
       }
+      else {
+        setWorkouts(session.user.workouts.filter(workout => workout.completed_date === null))
+      }
     }, [])
 
   return (
     <>
     {
-      session.user === null ? (navigate('/signin')) : (
+      session.user === null || workouts === null ? (navigate('/signin')) : (
         <div>
           
     <Header title='Workouts'/>
