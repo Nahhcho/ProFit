@@ -12,7 +12,7 @@ const ProfileModal = ({ showProfile, setShowProfile }) => {
     })
 
   return (
-    <Modal show={showProfile} centered>
+    <Modal show={showProfile} centered style={{paddingLeft: '20px', paddingRight: '20px'}}>
         <Modal.Body className='profile-div'>
             <div className='profile-head'>
                 <h6>Profile Settings</h6>
