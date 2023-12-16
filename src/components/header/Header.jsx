@@ -1,11 +1,21 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../contextProvider'
+import userPic from './user.jpg'
 import './header.css'
+import ProfileModal from '../profileModal/ProfileModal'
 
 const Header = ({ title }) => {
+    const [showProfile, setShowProfile] = useState(false)
 
     return (
-        <nav className='header'>{title}</nav>
+        <>
+        <ProfileModal showProfile={showProfile} setShowProfile={setShowProfile}/>
+        <nav className='header'>
+            <img className='user-pic' src={userPic} onClick={() => {setShowProfile(true)}} alt="" />
+            <h4 className='header-title'>{title}</h4>
+            <img className='dummy' src={userPic}  />
+        </nav>
+        </>
     )
 }
 

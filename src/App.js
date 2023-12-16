@@ -12,6 +12,8 @@ import StartWorkout from './containers/startWorkout/StartWorkout';
 import { useContext, useEffect } from 'react';
 import EditWorkout from './containers/editWorkout/EditWorkout';
 import ActivityPage from './containers/activityPage/ActivityPage';
+import WorkoutSplit from './containers/workoutSplit/WorkoutSplit';
+import CreateSplit from './containers/createSplit/CreateSplit';
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
     <Route path='/activity' element={<ActivityPage />} />
     <Route path='/start/:workoutData' element={<StartWorkout />} />
     <Route path='/edit/:workoutData' element={<EditWorkout />} />
+    <Route path='/splits' element={<WorkoutSplit />} />
+    <Route path='/createSplit' element={<CreateSplit />} />
     </Routes>
     </ContextProvider>
   );

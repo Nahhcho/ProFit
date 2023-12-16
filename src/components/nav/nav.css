@@ -6,8 +6,8 @@
     margin-top: -16px; /* Overlapping with the line */
   }
 
-  .line {
-    border-top: 2px solid greenyellow;
+  .nav-line {
+    border-top: 2px solid rgb(172, 255, 48);
   }
 
   .nav-container {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './loading.css'
 import loadingGif from './loading.gif'
-import Modal from 'react-bootstrap/Modal';
+import Modal from 'react-bootstrap/Modal'
 
 const Loading = () => {
 

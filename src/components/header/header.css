@@ -1,4 +1,7 @@
 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #100F0F;
     color: #fff;
     text-align: center;
@@ -6,3 +9,13 @@
     font-weight: 500;
     font-size: 24px;
   }
+
+  .user-pic {
+    height: 40px;
+
+  }
+
+.dummy {
+  height: 40px;
+  visibility: hidden;
+}

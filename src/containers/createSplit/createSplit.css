@@ -1,0 +1,14 @@
+.split-days-container {
+    padding: 30px;
+    width: 60vh;
+}
+
+.day-div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+option:hover {
+    background-color: #f1f1f1;
+  }

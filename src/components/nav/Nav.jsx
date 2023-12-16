@@ -10,7 +10,7 @@ const Nav = () => {
 
   return (
     <div className='nav-container'>
-    <hr className='line'/>
+    <hr className='nav-line'/>
     <nav className='navbar'>
         <p onClick={() => {navigate('/')}}>Workouts</p>
         <p onClick={() => {navigate('/activity')}}>Activity</p>

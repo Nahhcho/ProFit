@@ -139,7 +139,9 @@ const EditWorkout = () => {
   return (
     <div className='create-container'>
       {
-        loading ? (<Loading />) : null
+        loading ? (
+          <Loading />
+        ) : null
       }
         <Header title={'Edit'}></Header>
         <div className='workout-form-container'>

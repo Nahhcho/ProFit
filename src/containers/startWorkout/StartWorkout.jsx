@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import './startWorkout.css'
 import { Context } from '../../components/contextProvider'
 import { jwtDecode } from 'jwt-decode'
+import Loading from '../../components/loading/Loading'
 
 const StartWorkout = () => {
 
@@ -24,6 +25,7 @@ const StartWorkout = () => {
     const [currentExercise, setCurrentExercise] = useState(workout.exercises.filter(exercise => exercise.exercise_num === exerciseCount)[0])
     const [currentSet, setCurrentSet] = useState(currentExercise.sets.filter(set => set.set_num === setCount)[0])
     const navigate= useNavigate()
+    const [loading, setLoading] = useState(false)
     const [newSet, setNewSet] = useState({
       newWeight: '',
       newReps: ''
@@ -69,7 +71,6 @@ const StartWorkout = () => {
     }
 
     const stopCounting = () => {
-        // Clear the interval when the button is clicked
         clearInterval(intervalId)
         setTimeSet(false)
         setDisplayCount(displayCount-timeDiff)
@@ -83,7 +84,7 @@ const StartWorkout = () => {
         if(setCount === currentExercise.sets.length) {
           if(exerciseCount === workout.exercises.length) {
             stopCounting()
-            navigate('/')
+            completeWorkout()
           }
           else {
             let exercise = workout.exercises.filter(exercise => exercise.exercise_num === exerciseCount+1)[0]
@@ -101,6 +102,36 @@ const StartWorkout = () => {
         stopCounting()
         setDisplayCount(newTime)
         
+    }
+
+    const completeWorkout = () => {
+      setLoading(true)
+      const currentDate = new Date()
+      const year = currentDate.getFullYear()
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+      const day = currentDate.getDate().toString().padStart(2, '0')
+      const completedDate = `${year}-${month}-${day}`
+
+      fetch(`${session.API_URL}/complete_workout/${workout.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: session.user.id,
+          completed_date: completedDate
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setSession({
+          ...session,
+          authTokens: data,
+          user: jwtDecode(JSON.stringify(data)).user
+        })
+        localStorage.setItem('authTokens', JSON.stringify(data))
+        navigate('/activity')
+      })
     }
 
     const updateSet = () => {
@@ -150,6 +181,9 @@ const StartWorkout = () => {
 
     return (
       <> 
+      {
+        loading ? (<Loading />) : null
+      }
           <Header title={workout.title}/>
           <div className='exercise-container'>
               <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>

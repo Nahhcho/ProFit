@@ -3,3 +3,12 @@
     flex-direction: column;
     padding-bottom: 70px;
 }
+
+.tab-nav {
+    display: flex;
+    justify-content: center;
+}
+
+.current-tab {
+    background-color: greenyellow;
+}

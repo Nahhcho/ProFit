@@ -28,7 +28,6 @@ const DateHeader = ({ currentDate, setCurrentDate }) => {
 
   return (
     <>
-
     <nav className='date-header'>
         <img className='backward-arrow-button' onClick={prevDate} src={arrowButton} alt="" />
         <div className='date-div'>
@@ -42,7 +41,6 @@ const DateHeader = ({ currentDate, setCurrentDate }) => {
         </div>
         <img className='forward-arrow-button' onClick={nextDate} src={arrowButton} alt="" />
     </nav>
-    
     </>
     
   )

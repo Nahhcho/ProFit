@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import WorkoutCard from '../../components/workoutCard/WorkoutCard'
 import Nav from '../../components/nav/Nav'
@@ -12,8 +12,10 @@ const WorkoutPage = () => {
 
     const navigate = useNavigate()
     const [session] = useContext(Context)
+    const [workouts, setWorkouts] = useState(session.user.workouts.filter(workout => workout.completed_date === null))
 
     useEffect(() => {
+      console.log(workouts)
       if(session.user === null) {
         navigate('/signin')
       }
@@ -26,11 +28,19 @@ const WorkoutPage = () => {
         <div>
           
     <Header title='Workouts'/>
+    <ul class="tab-nav nav nav-tabs">
+      <li class="nav-item">
+        <a class="current-tab nav-link active" aria-current="page" href="">Workouts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" onClick={() => {navigate('/splits')}} href="">Workout Splits</a>
+      </li>
+    </ul>
     <div className='workouts-container'>
-    <AddButton />
+    <AddButton endpoint={'/create'}/>
     
     {
-      session.user.workouts.map(workout => (
+      workouts.map(workout => (
         <WorkoutCard workout={workout}/>
       ))
     }
