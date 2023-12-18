@@ -11,7 +11,7 @@ import Loading from '../../components/loading/Loading'
 const EditWorkout = () => {
 
     const { workoutData } = useParams();
-    const workout = JSON.parse(decodeURIComponent(workoutData));
+    const workout = JSON.parse(decodeURIComponent(workoutData))
     const [title, setTitle] = useState('')
     const [exercises, setExercises] = useState(workout.exercises)
     const [session, setSession] = useContext(Context)

@@ -74,7 +74,7 @@ const SplitCard = ({ split }) => {
         }
       </p>
       <button type="button" className={
-        split.id === session.user.current_split.id ? (
+        session.user.current_split !== null && split.id === session.user.current_split.id ? (
             'btn btn-outline-success disabled'
         ) : ("btn btn-outline-success")
       } onClick={setCurrentSplit}> Set Current Split </button>

@@ -14,15 +14,16 @@ const ActivityPage = () => {
     const dayName = dayNames[currentDate.getDay()]
     const [session] = useContext(Context)
     const [completedWorkout, setCompletedWorkout] = useState(null)
-    const [projectedWorkout, setProjectedWorkout] = useState(session.user.current_split.schedule[dayName])
+    const [projectedWorkout, setProjectedWorkout] = useState(null)
     const [projectedVolume, setProjectedVolume] = useState(0)
     const [completedVolume, setCompletedVolume] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
+      if (session.user.current_split !== null) {
+        setProjectedWorkout(session.user.current_split.schedule[dayName])
+      }
       setCompletedWorkout(session.user.workouts.filter(workout => workout.completed_date === formatDate(currentDate))[0])
-      setProjectedWorkout(session.user.current_split.schedule[dayName])
-      
       console.log(session.user.workouts)
     }, [currentDate])
 
@@ -39,7 +40,7 @@ const ActivityPage = () => {
         }
       }
       if(projectedWorkout !== null && projectedWorkout !== undefined) {
-        if(projectedWorkout.volume !== null && completedWorkout.volume !== undefined) {
+        if(projectedWorkout.volume !== null && projectedWorkout.volume !== undefined) {
           setProjectedVolume(projectedWorkout.volume)
         }
       }
@@ -49,10 +50,6 @@ const ActivityPage = () => {
       console.log(completedVolume)
       console.log(projectedVolume)
     }, [completedVolume])
-
-    const calcultePercentage = (max, min) => {
-      return (100/max) * min
-    }
 
     const formatDate = (date) => {
       const year = date.getFullYear()
@@ -70,7 +67,8 @@ const ActivityPage = () => {
   return (
     <div className='activity-container'>
         <DateHeader currentDate={currentDate} setCurrentDate={handleDateChange}/>
-        <WeekHeader currentDay={dayName} currentDate={currentDate} setCurrentDate={handleDateChange} />
+        <WeekHeader currentDay={dayName} currentDate={currentDate} />
+        
         <div className='completed-workout-div'>
           {
             completedWorkout ?
@@ -82,7 +80,10 @@ const ActivityPage = () => {
               
               projectedWorkout ? (
                 <h4>Projected Workout: {projectedWorkout.title}</h4>
-              ) : (<h4>Rest Day</h4>)
+              ) : (
+                session.user.current_split ? (<h4>Rest Day</h4>) : (<h4>No Current Split Set</h4>)
+              
+              )
             )
           }
           {
@@ -95,12 +96,14 @@ const ActivityPage = () => {
           {
             completedWorkout ? (
               <button type="button" class="activity-button btn btn-outline-success" onClick={() => {
-                navigate(`/edit/${encodeURIComponent(JSON.stringify(completedWorkout))}`)
+                navigate(`/view/${encodeURIComponent(JSON.stringify(completedWorkout))}`)
               }}>View Workout</button> 
               ) : (
+                projectedWorkout && currentDate === new Date() ? (
                 <button type="button" class="activity-button btn btn-outline-success" onClick={() => {
                   navigate(`/start/${encodeURIComponent(JSON.stringify(projectedWorkout))}`)
                 }}>Start Workout</button>
+                ) : null
               )
           }
         

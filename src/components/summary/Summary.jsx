@@ -10,9 +10,11 @@ const Summary = ({ completedWorkout, projectedWorkout }) => {
             <p>
                 Today's total volume was {completedWorkout.volume}, 
                 {
+                    projectedWorkout ? (
                     completedWorkout.volume > projectedWorkout.volume ? 
                     <> {completedWorkout.volume - projectedWorkout.volume} points greater than your best.</> :
-                    <>{projectedWorkout.volume - completedWorkout.volume} points less than your best.</>
+                    <> {projectedWorkout.volume - completedWorkout.volume} points less than your best.</>
+                    ) : <> set your current split to compare workouts.</>
                 }
             </p>
             ) : (

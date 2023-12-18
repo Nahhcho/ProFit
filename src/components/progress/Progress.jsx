@@ -12,7 +12,7 @@ const Progress = ({ projectedWorkout, completedWorkout }) => {
             }
           }
           if(projectedWorkout !== null && projectedWorkout !== undefined) {
-            if(projectedWorkout.volume !== null && completedWorkout.volume !== undefined) {
+            if(projectedWorkout.volume !== null && projectedWorkout.volume !== undefined) {
               setProjectedVolume(projectedWorkout.volume)
             }
           }
