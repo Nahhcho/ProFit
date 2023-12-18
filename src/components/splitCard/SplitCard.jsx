@@ -58,7 +58,7 @@ const SplitCard = ({ split }) => {
     <div class="card text-center">
       <div class="card-header">
         <h4 className='workout-title'>{split.title}</h4>
-        <img className='settings-image' src={settingsImage} />
+        <img className='settings-image' src={settingsImage} onClick={() => {navigate(`/editSplit/${split.id}`)}}/>
       </div>
     <div class="card-body">
       <h5 class="card-title">
@@ -75,8 +75,8 @@ const SplitCard = ({ split }) => {
       </p>
       <button type="button" className={
         session.user.current_split !== null && split.id === session.user.current_split.id ? (
-            'btn btn-outline-success disabled'
-        ) : ("btn btn-outline-success")
+            'btn btn-outline-primary disabled'
+        ) : ("btn btn-outline-secondary")
       } onClick={setCurrentSplit}> Set Current Split </button>
     </div>
   <div class="card-footer text-body-secondary">
