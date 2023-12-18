@@ -4,6 +4,7 @@ import { Context } from '../../components/contextProvider'
 import Header from '../../components/header/Header'
 import Nav from '../../components/nav/Nav'
 import Loading from '../../components/loading/Loading'
+import './editSplitPage.css'
 import { jwtDecode } from 'jwt-decode'
 
 const EditSplitPage = () => {
