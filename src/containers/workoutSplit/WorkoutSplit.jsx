@@ -18,10 +18,10 @@ const WorkoutSplit = () => {
     <Header title='Workouts'/>
     <ul class="tab-nav nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link" onClick={() => {navigate('/')}} href="" >Workouts</a>
+        <p class="nav-link" onClick={() => {navigate('/')}}>Workouts</p>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" >Workout Splits</a>
+        <p class="nav-link active" aria-current="page" >Workout Splits</p>
       </li>
     </ul>
     <div className='workouts-container'>

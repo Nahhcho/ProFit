@@ -8,27 +8,49 @@ import Progress from '../../components/progress/Progress'
 import Summary from '../../components/summary/Summary'
 import { useNavigate } from 'react-router-dom'
 
+interface Workout {
+  id: number,
+  title: string,
+  exercises: Exercise[],
+  completed_date?: string,
+  volume?: number
+}
+
+interface Exercise {
+  id: number,
+  title: string,
+  exercise_num: number,
+  sets: Set[]
+}
+
+interface Set {
+  id: number,
+  reps: number,
+  set_num: number,
+  weight: string
+}
+
 const ActivityPage = () => {
-    const [currentDate, setCurrentDate] = useState(new Date())
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    const dayName = dayNames[currentDate.getDay()]
+    const [currentDate, setCurrentDate] = useState<Date>(new Date())
+    const dayNames: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const dayName: string = dayNames[currentDate.getDay()]
     const [session] = useContext(Context)
-    const [completedWorkout, setCompletedWorkout] = useState(null)
-    const [projectedWorkout, setProjectedWorkout] = useState(null)
-    const [projectedVolume, setProjectedVolume] = useState(0)
-    const [completedVolume, setCompletedVolume] = useState(0)
+    const [completedWorkout, setCompletedWorkout] = useState<Workout | null>(null)
+    const [projectedWorkout, setProjectedWorkout] = useState<Workout | null>(null)
+    const [projectedVolume, setProjectedVolume] = useState<number>(0)
+    const [completedVolume, setCompletedVolume] = useState<number>(0)
     const navigate = useNavigate()
 
     useEffect(() => {
       if (session.user.current_split !== null) {
         setProjectedWorkout(session.user.current_split.schedule[dayName])
       }
-      setCompletedWorkout(session.user.workouts.filter(workout => workout.completed_date === formatDate(currentDate))[0])
+      setCompletedWorkout(session.user.workouts.filter((workout: Workout) => workout.completed_date === formatDate(currentDate))[0])
       console.log(session.user.workouts)
     }, [currentDate])
 
     useEffect(() => {
-      const newDate = new Date(currentDate)
+      const newDate: Date = new Date(currentDate)
       newDate.setDate(newDate.getDate())
       setCurrentDate(newDate)
     }, [])
@@ -51,16 +73,16 @@ const ActivityPage = () => {
       console.log(projectedVolume)
     }, [completedVolume])
 
-    const formatDate = (date) => {
-      const year = date.getFullYear()
-      const month = (date.getMonth() + 1).toString().padStart(2, '0')
-      const day = date.getDate().toString().padStart(2, '0')
+    const formatDate = (date: Date): string => {
+      const year: number = date.getFullYear()
+      const month: string = (date.getMonth() + 1).toString().padStart(2, '0')
+      const day: string = date.getDate().toString().padStart(2, '0')
       
-      const completedDate = `${year}-${month}-${day}`
+      const completedDate: string = `${year}-${month}-${day}`
       return completedDate
     }
 
-    const handleDateChange = (newDate) => {
+    const handleDateChange = (newDate: Date): void => {
         setCurrentDate(newDate)
       }
 
@@ -95,12 +117,12 @@ const ActivityPage = () => {
         <div className='activity-button-div'>
           {
             completedWorkout ? (
-              <button type="button" class="activity-button btn btn-outline-success" onClick={() => {
+              <button type="button" className="activity-button btn btn-outline-success" onClick={() => {
                 navigate(`/view/${encodeURIComponent(JSON.stringify(completedWorkout))}`)
               }}>View Workout</button> 
               ) : (
-                projectedWorkout && currentDate === new Date() ? (
-                <button type="button" class="activity-button btn btn-outline-success" onClick={() => {
+                projectedWorkout && currentDate.toDateString() === new Date().toDateString() ? (
+                <button type="button" className="activity-button btn btn-outline-success" onClick={() => {
                   navigate(`/start/${encodeURIComponent(JSON.stringify(projectedWorkout))}`)
                 }}>Start Workout</button>
                 ) : null
