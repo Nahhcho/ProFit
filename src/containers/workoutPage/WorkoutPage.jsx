@@ -30,7 +30,7 @@ const WorkoutPage = () => {
       session.user === null || workouts === null ? (navigate('/signin')) : (
         <div>
           
-    <Header title='Workouts'/>
+    <Header showProfileIcon={true} title='Workouts'/>
     <ul class="tab-nav nav nav-tabs">
       <li class="nav-item">
         <p class="current-tab nav-link active" aria-current="page">Workouts</p>

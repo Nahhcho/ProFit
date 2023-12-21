@@ -6,11 +6,16 @@ import './startWorkout.css'
 import { Context } from '../../components/contextProvider'
 import { jwtDecode } from 'jwt-decode'
 import Loading from '../../components/loading/Loading'
+import { MdClose } from 'react-icons/md'
+import Unfocused from '../unfocused/Unfocused'
 
 const StartWorkout = () => {
 
     const { workoutData } = useParams();
-    const workout = JSON.parse(decodeURIComponent(workoutData));
+    const workout = JSON.parse(decodeURIComponent(workoutData))
+    const [timerStart] = useState(new Date())
+    const [currentWorkout, setCurrentWorkout] = useState(null) 
+    const [focus, setFocus] = useState(true)
     const [newTime, setNewTime] = useState(90)
     const [editTimer, setEditTimer] = useState(false)
     const [session, setSession] = useContext(Context)
@@ -30,6 +35,27 @@ const StartWorkout = () => {
       newWeight: '',
       newReps: ''
     })
+
+    useEffect(() => {
+      const wipedWorkout = {
+        ...workout, 
+        exercises: workout.exercises.map(exercise => ({
+          ...exercise, 
+          sets: exercise.sets.map(set => ({
+            ...set, 
+            reps: 0,
+            weight: 0
+          }))
+        }))
+      }
+
+      setCurrentWorkout(wipedWorkout)
+    }, [])
+
+    useEffect(() => {
+      console.log(exerciseCount)
+      console.log(setCount)
+    }, [exerciseCount])
     
     useEffect(() => {
       return () => {
@@ -84,7 +110,7 @@ const StartWorkout = () => {
         if(setCount === currentExercise.sets.length) {
           if(exerciseCount === workout.exercises.length) {
             stopCounting()
-            completeWorkout()
+            setFocus(false)
           }
           else {
             let exercise = workout.exercises.filter(exercise => exercise.exercise_num === exerciseCount+1)[0]
@@ -139,6 +165,24 @@ const StartWorkout = () => {
       const weight = newSet.newWeight
       const reps = newSet.newReps
       setNewSet({newWeight: '', newReps: ''})
+
+      const wipedWorkout = {
+        ...currentWorkout,
+        exercises: currentWorkout.exercises.map(exercise =>
+          exercise.exercise_num === currentExercise.exercise_num
+            ? {
+                ...exercise,
+                sets: exercise.sets.map(set =>
+                  set.set_num === currentSet.set_num
+                    ? { ...set, weight: weight, reps: reps }
+                    : set
+                )
+              }
+            : exercise
+        )
+      }
+      setCurrentWorkout(wipedWorkout)
+
       fetch(`${session.API_URL}/set_detail/${currentSet.id}`, {
         method: 'PUT',
         headers: {
@@ -169,6 +213,13 @@ const StartWorkout = () => {
       console.log(newTime)
     }
 
+    const formatTime = (time) => {
+      const seconds = (`0${time % 60}`).slice(-2);
+      const minutes = (`0${Math.floor(time / 60)}`).slice(-2)
+  
+      return `${minutes}:${seconds}`
+    }
+
     const updateNewWeight = (e) => {
       setNewSet({...newSet, newWeight: e.target.value})
     }
@@ -184,9 +235,16 @@ const StartWorkout = () => {
       {
         loading ? (<Loading />) : null
       }
-          <Header title={workout.title}/>
+      {
+        focus ? (
+          <>
+          <Header showProfileIcon={false} title={workout.title}/>
           <div className='exercise-container'>
+            <div className='start-exercise-header'>
               <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>
+              <MdClose size={25} color='white' className='close-focus' onClick={() => {setFocus(false)}}/>
+            </div>
+              
               <div className='counter-container' >
                   {
                       editTimer === false ? (
@@ -195,7 +253,7 @@ const StartWorkout = () => {
                                 setEditTimer(true)
                                 stopCounting()
                                 }}>
-                                  {displayCount - timeDiff <= 0 ? (0) : (displayCount - timeDiff)}
+                                  {displayCount - timeDiff <= 0 ? (formatTime(0)) : (formatTime(displayCount - timeDiff))}
                               </p>
                               <div className='button-container'>
                                   <button
@@ -259,8 +317,16 @@ const StartWorkout = () => {
                   </div>
               </div>
           </div>
-          <Nav />
+          </>
+        ) : (
+          <Unfocused workout={workout} setFocus={setFocus} setSetCount={setSetCount} setExerciseCount={setExerciseCount}
+          setCurrentExercise={setCurrentExercise} setCurrentSet={setCurrentSet} timerStart={timerStart}
+          completeWorkout={completeWorkout} currentWorkout={currentWorkout} setCurrentWorkout={setCurrentWorkout}
+          currentExercise={currentExercise} currentSet={currentSet}/>
+        )
+      }
       </>
+          
   )
 }
 
