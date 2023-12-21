@@ -16,7 +16,7 @@ const CreateWorkoutPage = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const saveWorkout = async () => {
+  const saveWorkout = () => {
     fetch(`${session.API_URL}/user/${session.user.id}`, {
       method: 'PUT',
       headers: {

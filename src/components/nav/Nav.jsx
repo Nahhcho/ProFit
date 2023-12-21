@@ -14,7 +14,7 @@ const Nav = () => {
     <nav className='navbar'>
         <p onClick={() => {navigate('/')}}>Workouts</p>
         <p onClick={() => {navigate('/activity')}}>Activity</p>
-        <p>Profile</p>
+        <p onClick={() => {navigate('/leaderboard')}}>Leaderboard</p>
         <p onClick={() => {
           localStorage.removeItem('authTokens');
           setSession({

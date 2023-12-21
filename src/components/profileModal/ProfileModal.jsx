@@ -19,20 +19,26 @@ const ProfileModal = ({ showProfile, setShowProfile }) => {
                 <button type="button" class="btn-close btn-close-white" onClick={() => {setShowProfile(false)}} aria-label="Close"></button>
             </div>
             <div className='profile-edit-container'>
+
                 <div className='setting-container'>
                 <p className='setting-title'>Name:</p>
                 <p className='setting-target'>{session.user.first_name}</p>
                 </div>
+
                 <hr className='line'/>
+
                 <div className='setting-container'>
                 <p className='setting-title'>Weight:</p>
                 <p className='setting-target'>{session.user.weight}</p>
                 </div>
+
                 <hr className='line'/>
+
                 <div className='setting-container'>
                 <p className='setting-title'>Age:</p>
                 <p className='setting-target'>{session.user.age}</p>
                 </div>
+
                 <hr className='line'/>
                 
                 <div className='setting-container'>
@@ -43,6 +49,15 @@ const ProfileModal = ({ showProfile, setShowProfile }) => {
                         <>{session.user.current_split.title}</> : null
                 }
                 </p>
+                </div>
+                
+                <hr className='line'/>
+
+                <div className='setting-container'>
+                    <p className='setting-title'>Bench:</p>
+                <div className='setting-target-container'>
+                    <p className='setting-target'>{session.user.bench}</p>
+                </div>
                 </div>
             </div>
         </Modal.Body>

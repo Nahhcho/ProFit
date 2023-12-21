@@ -1,10 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { Context } from '../contextProvider'
 import userPic from './user.jpg'
 import './header.css'
 import ProfileModal from '../profileModal/ProfileModal'
 
-const Header = ({ title }) => {
+interface HeaderProps {
+    title: string
+}
+
+const Header: FC<HeaderProps> = ({ title }) => {
     const [showProfile, setShowProfile] = useState(false)
 
     return (

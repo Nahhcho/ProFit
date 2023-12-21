@@ -16,6 +16,8 @@ import WorkoutSplit from './containers/workoutSplit/WorkoutSplit';
 import CreateSplit from './containers/createSplit/CreateSplit';
 import ViewWorkoutPage from './containers/viewWorkoutPage/ViewWorkoutPage';
 import EditSplitPage from './containers/editSplitPage/EditSplitPage';
+import LeaderBoardPage from './containers/leaderBoardPage/LeaderBoardPage';
+import LogWorkout from './containers/logWorkout/LogWorkout';
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
     <Route path='/createSplit' element={<CreateSplit />} />
     <Route path='/view/:workoutData' element={<ViewWorkoutPage />} />
     <Route path='/editSplit/:splitId' element={<EditSplitPage />} />
+    <Route path='/leaderboard' element={<LeaderBoardPage />} />
+    <Route path='/log/:workoutData/:date/:dateString' element={<LogWorkout />} />
     </Routes>
     </ContextProvider>
   );

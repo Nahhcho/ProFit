@@ -8,12 +8,12 @@ const Summary = ({ completedWorkout, projectedWorkout }) => {
         {
             completedWorkout ? (
             <p>
-                Today's total volume was {completedWorkout.volume}, 
+                Today's total volume was {completedWorkout.volume} lbs, 
                 {
                     projectedWorkout ? (
                     completedWorkout.volume > projectedWorkout.volume ? 
-                    <> {completedWorkout.volume - projectedWorkout.volume} points greater than your best.</> :
-                    <> {projectedWorkout.volume - completedWorkout.volume} points less than your best.</>
+                    <> {completedWorkout.volume - projectedWorkout.volume} lbs greater than your best.</> :
+                    <> {projectedWorkout.volume - completedWorkout.volume} lbs less than your best.</>
                     ) : <> set your current split to compare workouts.</>
                 }
             </p>
@@ -21,7 +21,6 @@ const Summary = ({ completedWorkout, projectedWorkout }) => {
                 <p>No workout logged today</p>        
             )
         }
-        
     </div>
   )
 }
