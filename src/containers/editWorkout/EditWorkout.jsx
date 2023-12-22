@@ -12,7 +12,7 @@ const EditWorkout = () => {
 
     const { workoutData } = useParams();
     const workout = JSON.parse(decodeURIComponent(workoutData))
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(workout.title)
     const [exercises, setExercises] = useState(workout.exercises)
     const [session, setSession] = useContext(Context)
     const [loading, setLoading] = useState(false)
@@ -147,7 +147,7 @@ const EditWorkout = () => {
         <div className='workout-form-container'>
           <h1>Edit Workout</h1>
           <label for="workoutTitle" className="form-label">Title</label>
-            <input type="text" id="workoutTitle" class="form-control" value={title} placeholder={workout.title}
+            <input type="text" id="workoutTitle" class="form-control" value={title} 
             onChange={(e) => {setTitle(e.target.value)}}/>
 
             {

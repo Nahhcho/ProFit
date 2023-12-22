@@ -1,0 +1,15 @@
+.message-container {
+    border: 2px solid #dedede;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 10px 10px 10px;
+  }
+
+  .chat-text {
+    color: black;
+  }
+
+  .chatter {
+    color: black;
+  }

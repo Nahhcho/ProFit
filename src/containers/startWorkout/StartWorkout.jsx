@@ -242,7 +242,6 @@ const StartWorkout = () => {
           <div className='exercise-container'>
             <div className='start-exercise-header'>
               <h1>Exercise {currentExercise.exercise_num}: {currentExercise.title}</h1>
-              <MdClose size={25} color='white' className='close-focus' onClick={() => {setFocus(false)}}/>
             </div>
               
               <div className='counter-container' >
@@ -315,6 +314,7 @@ const StartWorkout = () => {
                           Next
                       </button>
                   </div>
+                  <button onClick={() => {setFocus(false)}} type="button" class="overview-button btn btn-outline-primary">Overview</button>
               </div>
           </div>
           </>

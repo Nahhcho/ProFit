@@ -1,0 +1,9 @@
+.warning-modal-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: #2C2F33;
+    height: 25vh;
+    width: 35vh;
+    align-self: center;
+}

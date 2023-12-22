@@ -5,10 +5,12 @@ import { Context } from '../../components/contextProvider'
 import { jwtDecode } from 'jwt-decode'
 import { MdClose } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
+import WarningModal from '../../components/warningModal/WarningModal'
 
 const Unfocused = ({ currentExercise, currentSet, setCurrentWorkout, workout, setFocus, setExerciseCount, setCurrentExercise, setCurrentSet, setSetCount, timerStart, completeWorkout, currentWorkout }) => {
     
     const [elapsedTime, setElapsedTime] = useState(Math.floor((new Date() - timerStart) / 1000))
+    const [showWarning, setShowWarning] = useState(false)
     const [session, setSession] = useContext(Context)
     const navigate = useNavigate()
 
@@ -74,8 +76,9 @@ const Unfocused = ({ currentExercise, currentSet, setCurrentWorkout, workout, se
 
     return (
         <>
+        <WarningModal showWarning={showWarning} setShowWarning={setShowWarning} />
         <Header title={workout.title} showProfileIcon={false} />
-        <MdClose size={25} color='white' className='close-unfocus' onClick={() => {navigate('/')}}/>
+        <MdClose size={25} color='white' className='close-unfocus' onClick={() => {setShowWarning(true)}}/>
         <div className='unfocused-container'>
           <>
           <h1 className='total-timer'>{formatTime(elapsedTime)}</h1>

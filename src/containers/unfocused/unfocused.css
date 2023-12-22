@@ -1,7 +1,7 @@
 .unfocused-container {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 0 10px 10px 10px;
 }
 
 .unfocused-exercise {
@@ -21,6 +21,7 @@
 .total-timer {
     display: flex;
     justify-content: center;
+    margin-top: 0px;
 }
 
 .complete-unfocus-button {

@@ -109,8 +109,10 @@ h5 {
 }
 
 .start-exercise-header {
-    display: flex; /* Use Flexbox */
-    
-    justify-content: space-between; /* Distribute items evenly along the main axis */
+    display: flex;  
+    justify-content: space-between;
   }
 
+.overview-button {
+    margin: 20px;
+}
