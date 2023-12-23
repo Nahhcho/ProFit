@@ -13,3 +13,7 @@
   .chatter {
     color: black;
   }
+
+  .chat-loading {
+    height: 50px;
+  }

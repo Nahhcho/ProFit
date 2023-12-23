@@ -1,13 +1,17 @@
 import React from 'react'
+import chatLoad from './chat-loading.gif'
 import './message.css'
 
-const Message = ({ message, chatter}) => {
+const Message = ({ message, chatter, loading}) => {
     
   return (
     <div class="message-container">
         <h5 className='chatter'>{chatter}:</h5>
-        <p className='chat-text'>{message}</p>
-        
+        {
+          message === '' ? 
+            <img className='chat-loading' src={chatLoad} alt="loading" /> :
+            <p className='chat-text'>{message}</p>
+        }
     </div>
   )
 }
