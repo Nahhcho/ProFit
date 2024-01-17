@@ -9,6 +9,7 @@ import { Context } from '../../components/contextProvider'
 
 const Chat = () => {
     const [messages, setMessages] = useState([])
+    const [modelWorkout, setModelWorkout] = useState('')
     const [message, setMessage] = useState('')
     const [session, setSession] = useContext(Context)
     const [loadingMessage, setLoadingMessage] = useState(false)
@@ -26,7 +27,7 @@ const Chat = () => {
 
     const sendMessage = () => {
         setLoadingMessage(true)
-        const newMessages = [...messages, { chatter: 'You', text: message }]
+        const newMessages = [...messages, { chatter: 'You', text: message , modelWorkout: '' }]
         setMessages(newMessages)
         setMessage('')
         scrollToBottom()
@@ -43,7 +44,7 @@ const Chat = () => {
         .then(response => response.json())
         .then(results => {
             console.log(results)
-            const newerMessages = [...newMessages, { chatter: 'Derek', text: results.response}]
+            const newerMessages = [...newMessages, { chatter: 'Derek', text: results.response, modelWorkout: results.modelWorkout}]
             setLoadingMessage(false)
             setMessages(newerMessages)
             scrollToBottom()
@@ -62,7 +63,7 @@ const Chat = () => {
                 <div className='messages'>
                     {
                         messages?.length > 0 && messages.map((msg, index) => (
-                            <Message key={index} chatter={msg.chatter} message={msg.text} />
+                            <Message key={index} chatter={msg.chatter} message={msg.text} modelWorkout={msg.modelWorkout}/>
                         ))
                     }
                     {

@@ -19,6 +19,7 @@ import EditSplitPage from './containers/editSplitPage/EditSplitPage';
 import LeaderBoardPage from './containers/leaderBoardPage/LeaderBoardPage';
 import LogWorkout from './containers/logWorkout/LogWorkout';
 import Chat from './containers/chat/Chat';
+import DerekWorkout from './containers/derekWorkout/DerekWorkout';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
     <Route path='/editSplit/:splitId' element={<EditSplitPage />} />
     <Route path='/leaderboard' element={<LeaderBoardPage />} />
     <Route path='/log/:workoutData/:date/:dateString' element={<LogWorkout />} />
+    <Route path='/recommended/:workoutData' element={<DerekWorkout />} />
     <Route path='/chat' element={<Chat />} />
     </Routes>
     </ContextProvider>

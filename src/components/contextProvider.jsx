@@ -6,7 +6,7 @@ const Context = createContext()
 const ContextProvider = ({ children }) => {
     const [session, setSession] = useState({
         header: 'Workouts',
-        API_URL: 'https://progressive-fitness-e23f6b52f26a.herokuapp.com',
+        API_URL: 'http://127.0.0.1:8000',
         user: localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')).user : null,
         authTokens: localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
     })
