@@ -76,6 +76,7 @@ const StartWorkout = () => {
           stopCounting()
         }
       }
+      console.log(currentWorkout)
       }
     , [seconds]);
 
@@ -291,6 +292,13 @@ const StartWorkout = () => {
                   <div className='old-set-container'>
                       <h5>Previous Set: {currentSet.reps} x {currentSet.weight}</h5>
                   </div>
+                  {
+                    currentSet.target_reps ? (
+                      <div className='old-set-container'>
+                        <h5>Target Set: {currentSet.reps} x {currentSet.weight}</h5>
+                      </div>
+                    ) : null
+                  }
                   <div className='set-container'>
                       <h3>Set {currentSet.set_num}:</h3>
                       <input type="number" className='rep-input' value={newSet.newReps} onChange={(e) => updateNewReps(e)}/>

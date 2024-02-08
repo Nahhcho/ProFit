@@ -6,76 +6,33 @@ import { jwtDecode } from 'jwt-decode'
 import { MdClose } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import WarningModal from '../../components/warningModal/WarningModal'
+import CompleteModal from '../../components/completedModal/CompleteModal'
 
 const Unfocused = ({ currentExercise, currentSet, setCurrentWorkout, workout, setFocus, setExerciseCount, setCurrentExercise, setCurrentSet, setSetCount, timerStart, completeWorkout, currentWorkout }) => {
     
     const [elapsedTime, setElapsedTime] = useState(Math.floor((new Date() - timerStart) / 1000))
     const [showWarning, setShowWarning] = useState(false)
+    const [showEnd, setShowEnd] = useState(false)
     const [session, setSession] = useContext(Context)
-    const navigate = useNavigate()
 
     useEffect(() => {
         const timer = setInterval(() => {
-            const currentTime = new Date();
+            const currentTime = new Date()
             const elapsedTimeInSeconds = Math.floor((currentTime - timerStart) / 1000)
-            setElapsedTime(elapsedTimeInSeconds);
+            setElapsedTime(elapsedTimeInSeconds)
         }, 1000)
-    
-      }, [timerStart]);
+      }, [timerStart])
     
       const formatTime = (time) => {
-        const seconds = (`0${time % 60}`).slice(-2);
-        const minutes = (`0${Math.floor(time / 60)}`).slice(-2);
-        const hours = (`0${Math.floor(time / 3600)}`).slice(-2);
+        const seconds = (`0${time % 60}`).slice(-2)
+        const minutes = (`0${Math.floor(time / 60)}`).slice(-2)
     
-        return `${hours}:${minutes}:${seconds}`
-      }
-
-      const updateSet = (set) => {
-        const weight = set.weight
-        const reps = set.reps
-
-        const wipedWorkout = {
-            ...currentWorkout,
-            exercises: currentWorkout.exercises.map(exercise =>
-              exercise.exercise_num === currentExercise.exercise_num
-                ? {
-                    ...exercise,
-                    sets: exercise.sets.map(set =>
-                      set.set_num === currentSet.set_num
-                        ? { ...set, weight: weight, reps: reps }
-                        : set
-                    )
-                  }
-                : exercise
-            )
-          }
-        setCurrentWorkout(wipedWorkout)
-
-        fetch(`${session.API_URL}/set_detail/${set.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            weight: weight,
-            reps: reps,
-            userId: session.user.id
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          setSession({
-            ...session, 
-            authTokens: data,
-            user: jwtDecode(JSON.stringify(data)).user
-          })
-          localStorage.setItem('authTokens', JSON.stringify(data))
-        })  
+        return `${minutes}:${seconds}`
       }
 
     return (
         <>
+        <CompleteModal workout={currentWorkout} showEnd={showEnd} workoutId={workout.id} completeWorkout={completeWorkout} setShowEnd={setShowEnd}/>
         <WarningModal showWarning={showWarning} setShowWarning={setShowWarning} />
         <Header title={workout.title} showProfileIcon={false} />
         <MdClose size={25} color='white' className='close-unfocus' onClick={() => {setShowWarning(true)}}/>
@@ -112,7 +69,7 @@ const Unfocused = ({ currentExercise, currentSet, setCurrentWorkout, workout, se
             }
           </>
           <button type="button" class="complete-unfocus-button btn btn-outline-success"
-          onClick={completeWorkout}>Complete Workout</button>
+          onClick={() => {setShowEnd(true)}}>Complete Workout</button>
         </div>
         </>
       )
