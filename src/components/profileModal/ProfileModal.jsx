@@ -52,13 +52,6 @@ const ProfileModal = ({ showProfile, setShowProfile }) => {
                 </div>
                 
                 <hr className='line'/>
-
-                <div className='setting-container'>
-                    <p className='setting-title'>Bench:</p>
-                <div className='setting-target-container'>
-                    <p className='setting-target'>{session.user.bench}</p>
-                </div>
-                </div>
             </div>
         </Modal.Body>
     </Modal>
